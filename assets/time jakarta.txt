@@ -1,0 +1,21 @@
+<?php
+function getthistime($type, $modify = null){
+  $now = new DateTime(null, new DateTimeZone('Asia/Jakarta'));
+  if($modify){
+    $now->modify($modify);
+  }
+  if(!isset($type) || $type == 'datetime'){
+    return $now->format('Y-m-d H:i:s');
+  }
+  if($type == 'time'){
+    return $now->format('H:i:s');
+  }
+  if($type == 'timestamp'){
+    return $now->getTimestamp();
+  }
+}
+function timestampfromdate($date){
+  return DateTime::createFromFormat('Y-m-d H:i:s', $date, new DateTimeZone('Asia/Baghdad'))->getTimestamp();
+}
+
+echo getthistime('timestamp')."--".timestampfromdate(getthistime('datetime'))."--".strtotime(getthistime('datetime'));
